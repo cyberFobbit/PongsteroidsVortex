@@ -10,7 +10,6 @@ public class SpawnOnCircle : MonoBehaviour
     public bool onlyOnRadius;
     public float radius;
     public float interval;
-    public float test;
 
     float t = 0;
 
@@ -39,7 +38,8 @@ public class SpawnOnCircle : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        //if (!Selection.Contains(this)) return;
+        if (!Selection.Contains(this.gameObject)) return;
+
         Handles.color = Color.blue;
         Handles.DrawWireDisc(transform.position, transform.forward, radius);
 

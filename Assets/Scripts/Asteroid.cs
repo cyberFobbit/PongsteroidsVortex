@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class Asteroid : MonoBehaviour
 {
-    public float rotateSpeed;
-    public float moveSpeed;
+    public Vector2 rotateSpeedRange;
+    public Vector2 moveSpeedRange;
     public Vector3 center;
+
+    float rotateSpeed;
+    float moveSpeed;
+
+    private void Start()
+    {
+        rotateSpeed = Random.Range(rotateSpeedRange.x, rotateSpeedRange.y);
+        moveSpeed = Random.Range(moveSpeedRange.x, moveSpeedRange.y);
+    }
 
     // Update is called once per frame
     void Update()
@@ -15,9 +24,12 @@ public class Asteroid : MonoBehaviour
         transform.Rotate(Vector3.forward, rotateSpeed * Time.deltaTime);
 
         //move
-        transform.position += (transform.position - center).normalized * moveSpeed * Time.deltaTime;
+        transform.position -= (transform.position - center).normalized * moveSpeed * Time.deltaTime;
 
-
+        if(Vector3.Distance(transform.position, center) < 0.1f)
+        {
+            Destroy(this.gameObject);
+        }
 
     }
 }
