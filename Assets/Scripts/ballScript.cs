@@ -18,6 +18,7 @@ public class ballScript : MonoBehaviour
         transform.position += (new Vector3(0.09f, 0.05f, 0)); //randomly move ball
         WrapBall(); //pretty self explanatory, iyam
     }
+    
     void WrapBall(){
         Vector3 destVp = new Vector3(0,0,cam.WorldToViewportPoint(transform.position).z); //Destination vecotr in Viewport space (easier to do math on)
         if(cam.WorldToViewportPoint(transform.position).x > 1
