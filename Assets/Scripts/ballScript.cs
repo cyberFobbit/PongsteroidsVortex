@@ -1,21 +1,25 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[RequireComponent(typeof(Rigidbody))]
 public class ballScript : MonoBehaviour
 {
-    public Camera cam;
-
+    Camera cam;
+    Rigidbody2D rb;
+    public float speed;
     // Start is called before the first frame update
     void Start()
     {
-        
+        cam = Camera.main;
+        rb = GetComponent<Rigidbody2D>();
+        rb.AddForce(new Vector2(Random.value,Random.value) * speed, ForceMode2D.Impulse);
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position += (new Vector3(0.09f, 0.05f, 0)); //randomly move ball
+        //transform.position += (new Vector3(0.09f, 0.05f, 0)); //randomly move ball
+        
         WrapBall(); //pretty self explanatory, iyam
     }
     
