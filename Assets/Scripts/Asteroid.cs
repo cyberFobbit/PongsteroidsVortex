@@ -17,6 +17,11 @@ public class Asteroid : MonoBehaviour
         moveSpeed = Random.Range(moveSpeedRange.x, moveSpeedRange.y);
     }
 
+    
+    private void OnCollisionEnter2D(Collision2D other) {
+        Destroy(this.gameObject);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -26,7 +31,7 @@ public class Asteroid : MonoBehaviour
         //move
         transform.position -= (transform.position - center).normalized * moveSpeed * Time.deltaTime;
 
-        if(Vector3.Distance(transform.position, center) < 0.1f)
+        if(Vector3.Distance(transform.position, center) < 0.2f)
         {
             Destroy(this.gameObject);
         }

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8024058205164183336}
   - component: {fileID: 8076102978504508680}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Paddle
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,6 +96,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ce9584197a38f64593be72b353602ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smoothing: 20
+  sensitivity: 14
+  offsetFromCenter: 2
+  target: 0
+  targetPos: {x: 0, y: 0, z: 0}
 --- !u!61 &8076102978504508680
 BoxCollider2D:
   m_ObjectHideFlags: 0
