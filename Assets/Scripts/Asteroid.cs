@@ -20,6 +20,11 @@ public class Asteroid : MonoBehaviour
     
     private void OnCollisionEnter2D(Collision2D other) {
         Destroy(this.gameObject);
+
+        if (other.collider.gameObject.GetComponent<BallScript>())
+        {
+            //score
+        }
     }
 
     // Update is called once per frame
