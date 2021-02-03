@@ -25,7 +25,6 @@ public class BallScript : MonoBehaviour
         rb.velocity = speed * Vector3.Normalize(Vector2.Lerp(Vector3.Normalize(rb.velocity), -1 * Vector3.Normalize(transform.position), 0.5f * Time.deltaTime)); //maintain a constant speed and drift towards the center
         WrapBall(); //pretty self explanatory, iyam
     }
-    
     void WrapBall(){
         Vector3 destVp = cam.WorldToViewportPoint(transform.position); //Destination vector in Viewport space (easier to do math on)
         if(cam.WorldToViewportPoint(transform.position).x > 1
