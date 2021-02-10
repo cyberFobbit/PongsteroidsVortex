@@ -23,15 +23,17 @@ public class Asteroid : MonoBehaviour
 
     
     private void OnCollisionEnter2D(Collision2D other) {
+        Debug.Log(other.collider.gameObject.name);
+
         if (other.collider.gameObject.GetComponent<BallScript>())
         {
             gameManager.GetComponent<GameManager>().AddScore();
         }
-        /*if (other.collider.gameObject.GetComponent<Paddle>())
+        if (other.collider.gameObject.name == "Square")
         {
             Debug.Log("Game Over in Asteroid");
             gameManager.GetComponent<GameManager>().GameOver();
-        }*/
+        }
         
         Destroy(this.gameObject);
     }
