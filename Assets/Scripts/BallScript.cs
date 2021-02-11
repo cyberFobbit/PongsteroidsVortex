@@ -8,13 +8,18 @@ public class BallScript : MonoBehaviour
     Rigidbody2D rb;
     public float speed;
     public Vector3 center;
+
+    public float gravityScale;
+
+    bool trailOff = false;
+    TrailRenderer trail;
     // Start is called before the first frame update
     void Start()
     {
         //set global variables
         cam = Camera.main;
         rb = GetComponent<Rigidbody2D>();
-
+        trail = GetComponent<TrailRenderer>();
 
         rb.AddForce(new Vector2(0,1) * speed, ForceMode2D.Impulse); //give the ball a swift kick to the pants
     }
@@ -22,19 +27,35 @@ public class BallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb.velocity = speed * Vector3.Normalize(Vector2.Lerp(Vector3.Normalize(rb.velocity), -1 * Vector3.Normalize(transform.position), 0.5f * Time.deltaTime)); //maintain a constant speed and drift towards the center
-        WrapBall(); //pretty self explanatory, iyam
+        if (trailOff)
+        {
+            trail.emitting = true;
+            trailOff = false;
+        }
+
+        rb.velocity = speed * Vector3.Normalize(Vector2.Lerp(Vector3.Normalize(rb.velocity), -1 * Vector3.Normalize(transform.position), gravityScale * Time.deltaTime)); //maintain a constant speed and drift towards the center
+        //TorusWrapBall(); //pretty self explanatory, iyam
     }
-    void WrapBall(){
+    void TorusWrapBall(){
+
+        Vector3 screenPos = cam.WorldToViewportPoint(transform.position); //just store this for better readability
+
         Vector3 destVp = cam.WorldToViewportPoint(transform.position); //Destination vector in Viewport space (easier to do math on)
-        if(cam.WorldToViewportPoint(transform.position).x > 1
-        || cam.WorldToViewportPoint(transform.position).x < 0){
-            destVp.x = Mathf.Abs(cam.WorldToViewportPoint(transform.position).x - 1); //flippity
+        
+        if(screenPos.x > 1|| screenPos.x < 0) //if out of bounds x
+        {
+            trail.emitting = false;
+            trailOff = true;
+
+            destVp.x = Mathf.Abs(screenPos.x - 0.99f); //flippity
             transform.position = cam.ViewportToWorldPoint(destVp); //your ball is my property
         }
-        if(cam.WorldToViewportPoint(transform.position).y > 1
-        || cam.WorldToViewportPoint(transform.position).y < 0){ //if out of bounds
-            destVp.y = Mathf.Abs(cam.WorldToViewportPoint(transform.position).y - 1); //floppity
+        if(screenPos.y > 1 || screenPos.y < 0) //if out of bounds y
+        { 
+            trail.emitting = false;
+            trailOff = true;
+
+            destVp.y = Mathf.Abs(screenPos.y - 0.99f); //floppity
             transform.position = cam.ViewportToWorldPoint(destVp); //your ball is my property
         }
     
