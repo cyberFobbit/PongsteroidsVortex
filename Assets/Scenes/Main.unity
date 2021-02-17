@@ -439,6 +439,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1412401204}
   - component: {fileID: 1412401203}
+  - component: {fileID: 1412401205}
   m_Layer: 0
   m_Name: Spawner
   m_TagString: Untagged
