@@ -2,29 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class Paddle : MonoBehaviour
 {
-    public float smoothing = 20;
     public float sensitivity = 14;
-    public float offsetFromCenter = 1;
+    public float maxOffsetFromCenter = 1;
+    public float minOffsetFromCenter = 0.3f;
 
-    public float target;
-    public Vector3 targetPos;
+    Vector3 targetPos;
     // Start is called before the first frame update
     void Start()
     {
-        target = transform.rotation.z;
         targetPos = new Vector3(0, 0, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
-        target = target + Input.mouseScrollDelta.y * sensitivity;
-        targetPos.x = -Mathf.Sin(transform.eulerAngles.z * 2 * Mathf.PI / 360) * offsetFromCenter;
-        targetPos.y = Mathf.Cos(transform.eulerAngles.z * 2 * Mathf.PI / 360) * offsetFromCenter;
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, target), smoothing * Time.deltaTime);
-        transform.position = targetPos;
+        float mouseDist = Mathf.Clamp(Vector3.Distance((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero), minOffsetFromCenter, maxOffsetFromCenter);
+        print(Vector3.Distance((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero));
+        targetPos.x = -Mathf.Sin(transform.eulerAngles.z * 2 * Mathf.PI / 360) * mouseDist;
+        targetPos.y = Mathf.Cos(transform.eulerAngles.z * 2 * Mathf.PI / 360) * mouseDist;
+        
+        GetComponent<Rigidbody2D>().velocity = (targetPos - transform.position) * sensitivity;
+
+        Vector3 dir = Input.mousePosition - Camera.main.WorldToScreenPoint(Vector3.zero);
+        float angle = -Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
     }
 }
