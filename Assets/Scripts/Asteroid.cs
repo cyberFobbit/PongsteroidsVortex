@@ -8,8 +8,6 @@ public class Asteroid : MonoBehaviour
     public Vector2 moveSpeedRange;
     public Vector3 center;
 
-    public GameObject gameManager;
-
     float rotateSpeed;
     float moveSpeed;
 
@@ -17,8 +15,6 @@ public class Asteroid : MonoBehaviour
     {
         rotateSpeed = Random.Range(rotateSpeedRange.x, rotateSpeedRange.y);
         moveSpeed = Random.Range(moveSpeedRange.x, moveSpeedRange.y);
-
-        gameManager = GameObject.Find("Spawner");
     }
 
     
@@ -27,15 +23,18 @@ public class Asteroid : MonoBehaviour
 
         if (other.collider.gameObject.GetComponent<BallScript>())
         {
-            gameManager.GetComponent<GameManager>().AddScore();
+            //change score
+            GameManager.score++;
         }
-        if (other.collider.gameObject.name == "Square")
+        if (other.collider.gameObject.GetComponent<Paddle>())
         {
             Debug.Log("Game Over in Asteroid");
-            gameManager.GetComponent<GameManager>().GameOver();
+
+            //call gameover from singelton instance
+            GameManager.instance.GameOver();
         }
         
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 
     // Update is called once per frame

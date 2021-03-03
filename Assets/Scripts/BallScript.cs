@@ -33,7 +33,9 @@ public class BallScript : MonoBehaviour
             trailOff = false;
         }
 
-        rb.velocity = speed * Vector3.Normalize(Vector2.Lerp(Vector3.Normalize(rb.velocity), -1 * Vector3.Normalize(transform.position), gravityScale * Time.deltaTime)); //maintain a constant speed and drift towards the center
+        //rb.velocity = speed * Vector3.Normalize(Vector2.Lerp(Vector3.Normalize(rb.velocity), -1 * Vector3.Normalize(transform.position), gravityScale * Time.deltaTime)); //maintain a constant speed and drift towards the center
+        rb.AddForce(-transform.position * gravityScale, ForceMode2D.Force);
+        
         //TorusWrapBall(); //pretty self explanatory, iyam
     }
     void TorusWrapBall(){

@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeedRange: {x: -50, y: 50}
-  moveSpeedRange: {x: 2, y: 0.5}
+  moveSpeedRange: {x: 2.5, y: 0.5}
   center: {x: 0, y: 0, z: 0}
 --- !u!58 &3923366223847450730
 CircleCollider2D:
